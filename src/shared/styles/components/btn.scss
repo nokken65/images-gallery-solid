@@ -1,0 +1,13 @@
+@layer components {
+  .btn {
+    @apply flex appearance-none items-center justify-center gap-2 whitespace-nowrap p-2 font-bold leading-none transition-colors duration-150 ease-in-out disabled:pointer-events-none;
+
+    &-primary {
+      @apply bg-purple-500 text-white hover:bg-purple-500/80;
+    }
+
+    &-ghost {
+      @apply bg-transparent text-slate-400 hover:bg-slate-400/50 hover:text-slate-800 dark:text-slate-600;
+    }
+  }
+}

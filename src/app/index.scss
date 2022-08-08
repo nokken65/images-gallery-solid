@@ -1,0 +1,25 @@
+@tailwind base;
+
+@tailwind components;
+@import '../shared/styles/index.scss';
+
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-slate-800;
+  }
+
+  .dark > body {
+    @apply bg-slate-800 text-white;
+  }
+
+  #app-root {
+    @apply h-full w-full min-h-screen justify-between max-w-[100vw] flex flex-col items-center p-0 m-0;
+  }
+}
