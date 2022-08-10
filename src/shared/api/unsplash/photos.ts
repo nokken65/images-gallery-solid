@@ -1,13 +1,13 @@
 import { ValidationError } from 'myzod';
 
 import { unsplashRequest } from './base';
-import { GetAllPhotosParams, Photo } from './models';
-import { getAllPhotosSchema, photosSchema } from './schemas';
+import { GetPhotosParams, GetPhotosResult, Photo } from './models';
+import { getPhotosSchema, photosSchema } from './schemas';
 
-export const getAllPhotos = async (
-  _params: GetAllPhotosParams,
-): Promise<Photo[]> => {
-  const params = getAllPhotosSchema.parse(_params);
+export const getPhotos = async (
+  _params: GetPhotosParams,
+): Promise<GetPhotosResult> => {
+  const params = getPhotosSchema.parse(_params);
 
   if (params instanceof ValidationError) {
     return Promise.reject(new Error(params.message));
@@ -27,7 +27,14 @@ export const getAllPhotos = async (
     if (result instanceof ValidationError) {
       return Promise.reject(new Error(result.message));
     } else {
-      return result;
+      return Promise.resolve({
+        data: result,
+        meta: {
+          total: parseInt(res.headers.get('x-total') ?? '', 10),
+          page: params.page,
+          per_page: parseInt(res.headers.get('x-per-page') ?? '', 10),
+        },
+      });
     }
   } else {
     return Promise.reject(new Error(res.statusText));

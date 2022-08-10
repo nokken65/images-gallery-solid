@@ -1,8 +1,7 @@
-import { createVisibilityObserver } from '@solid-primitives/intersection-observer';
 import { decode } from 'blurhash';
+import clsx from 'clsx';
 import {
   Component,
-  createEffect,
   createSignal,
   JSX,
   mergeProps,
@@ -12,7 +11,7 @@ import {
 } from 'solid-js';
 
 type ImageProps = JSX.ImgHTMLAttributes<HTMLImageElement> & {
-  blurHash?: string;
+  blurHash: string | null;
   width: number;
   height: number;
 };
@@ -20,7 +19,6 @@ type ImageProps = JSX.ImgHTMLAttributes<HTMLImageElement> & {
 export const PImage: Component<ImageProps> = (_props) => {
   const props = mergeProps(
     {
-      blurHash: 'LEHLk~WB2yk8pyo0adR*.7kCMdnj',
       src: '',
       alt: '',
       width: 320,
@@ -38,11 +36,7 @@ export const PImage: Component<ImageProps> = (_props) => {
 
   const [src, setSrc] = createSignal<string | null>(null);
 
-  let wrapperRef: HTMLDivElement | undefined;
   let canvasRef: HTMLCanvasElement | undefined;
-
-  const useVisibilityObserver = createVisibilityObserver({ threshold: 0.2 });
-  const visible = useVisibilityObserver(() => wrapperRef);
 
   onMount(() => {
     if (canvasRef) {
@@ -55,16 +49,17 @@ export const PImage: Component<ImageProps> = (_props) => {
       const ctx = canvasRef.getContext('2d');
 
       if (ctx) {
-        const pixels = decode(local.blurHash, width, height);
+        const pixels = decode(
+          local.blurHash ?? 'LEHLk~WB2yk8pyo0adR*.7kCMdnj',
+          width,
+          height,
+        );
         const imageData = ctx.createImageData(width, height);
         imageData.data.set(pixels);
         ctx.putImageData(imageData, 0, 0);
       }
     }
-  });
-
-  createEffect(() => {
-    if (visible()) {
+    {
       const img = new Image();
       img.src = local.src;
       img.onload = () => {
@@ -74,15 +69,17 @@ export const PImage: Component<ImageProps> = (_props) => {
   });
 
   return (
-    <div ref={wrapperRef}>
-      <Show
-        when={src()}
-        fallback={<canvas class='h-auto w-full' ref={canvasRef} />}
-      >
-        {(src) => (
-          <img class='h-auto w-full' {...rest} src={src} alt={local.alt} />
-        )}
-      </Show>
-    </div>
+    <Show
+      when={src()}
+      fallback={<canvas class={clsx('h-auto w-full')} ref={canvasRef} />}
+    >
+      <img
+        class={clsx('h-auto w-full')}
+        {...rest}
+        src={src()!}
+        loading='lazy'
+        alt={local.alt}
+      />
+    </Show>
   );
 };

@@ -2,7 +2,7 @@ import { array, date, literals, number, object, string } from 'myzod';
 
 import { HEX_COLOR, UNSPLASH_IMAGE_URL } from '@/shared/constants/regex';
 
-export const getAllPhotosSchema = object({
+export const getPhotosSchema = object({
   page: number().default(1),
   per_page: number().min(0).max(30).default(20),
   order_by: literals('latest', 'oldest', 'popular').default('latest'),
@@ -19,7 +19,7 @@ export const photoSchema = object({
   width: number(),
   height: number(),
   color: string().pattern(HEX_COLOR),
-  blur_hash: string(),
+  blur_hash: string().nullable(),
   likes: number(),
   description: string().nullable(),
   urls: object({
