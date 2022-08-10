@@ -1,4 +1,4 @@
-import { combine, createEvent, createStore, sample } from 'effector';
+import { createEvent, createStore, sample } from 'effector';
 
 const $page = createStore<number>(1);
 const $hasPrev = createStore<boolean>(false);

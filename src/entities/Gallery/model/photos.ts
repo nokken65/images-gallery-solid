@@ -1,5 +1,4 @@
 import { createEffect, createStore, sample } from 'effector';
-import { produce } from 'immer';
 
 import {
   GetPhotosParams,
@@ -40,9 +39,6 @@ sample({
   fn: (_, { meta }) => meta.total,
   target: pagination.$total,
 });
-
-$photosMap.watch(console.log);
-// getPhotosFx.fail.watch(console.log);
 
 export const photos = {
   $photosMap,

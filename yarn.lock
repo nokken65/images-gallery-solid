@@ -2720,7 +2720,6 @@ __metadata:
     eslint-plugin-solid: ^0.7.1
     history: ^5.3.0
     http-server: ^14.1.1
-    immer: ^9.0.15
     myzod: ^1.8.8
     postcss: ^8.4.14
     prettier: ^2.7.1
@@ -2735,13 +2734,6 @@ __metadata:
     vite-tsconfig-paths: ^3.5.0
   languageName: unknown
   linkType: soft
-
-"immer@npm:^9.0.15":
-  version: 9.0.15
-  resolution: "immer@npm:9.0.15"
-  checksum: 92e3d63e810e3c3c2bb61b70c45443e37ef983ad12924e3edaf03725ae5979618f5b473439bb3bb4a8c4769f25132f18dec10ea15c40f0b20da5691ff96ff611
-  languageName: node
-  linkType: hard
 
 "immutable@npm:^4.0.0":
   version: 4.1.0

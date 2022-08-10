@@ -1,12 +1,7 @@
-import { Gallery, PagesProgress } from '@/entities/Gallery';
+import { Gallery } from '@/entities/Gallery';
 
 const HomePage = () => {
-  return (
-    <>
-      <Gallery />
-      <PagesProgress />
-    </>
-  );
+  return <Gallery />;
 };
 
 export default HomePage;
